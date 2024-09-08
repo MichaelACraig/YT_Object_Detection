@@ -33,6 +33,9 @@ def load_model(cap):
         classes = [line.strip() for line in f.readlines()]
     
     while True:
+        if cv2.waitKey(1) & 0xFF == ord('q'): # Breaks look when key 'q' is pressed
+            break
+        
         ret, frame = cap.read() # Reads frame by frame
         if not ret:
             print("Failed to retrieve frame. Exiting program")
@@ -80,9 +83,6 @@ def load_model(cap):
                 cv2.putText(frame, label, (x,y - 10), font, 1, color, 2)
 
         cv2.imshow("Real-Time Object Detection", frame)
-
-        if cv2.waitKey(1) & 0xFF == ord('q'): # Breaks look when key 'q' is pressed
-            break
         
     cap.release()
     cv2.destroyAllWindows()
